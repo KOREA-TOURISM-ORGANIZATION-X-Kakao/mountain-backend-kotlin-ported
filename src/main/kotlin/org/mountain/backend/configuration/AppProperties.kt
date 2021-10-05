@@ -1,6 +1,7 @@
 package org.mountain.backend.configuration
 
 import org.springframework.boot.context.properties.ConfigurationProperties
+import kotlin.properties.Delegates
 
 @ConfigurationProperties(prefix = "app")
 class AppProperties {
@@ -9,7 +10,7 @@ class AppProperties {
 
     inner class Auth {
         lateinit var tokenSecret: String
-        lateinit var tokenExpirationSeconds: String
+        var tokenExpirationSeconds: Long by Delegates.notNull<Long>()
     }
 
 }
