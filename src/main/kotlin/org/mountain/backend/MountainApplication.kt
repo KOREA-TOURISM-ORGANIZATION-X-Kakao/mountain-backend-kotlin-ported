@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing
 @SpringBootApplication
 @EnableJpaAuditing
 @EnableConfigurationProperties(AppProperties::class)
-open class MountainApplication
+class MountainApplication
 
 fun main(args: Array<String>) {
     runApplication<MountainApplication>(*args)
