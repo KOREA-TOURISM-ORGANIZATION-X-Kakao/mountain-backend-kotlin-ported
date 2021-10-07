@@ -15,6 +15,7 @@ import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.crypto.factory.PasswordEncoderFactories
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
+import org.springframework.security.config.web.servlet.invoke
 
 @Configuration
 @EnableWebSecurity
@@ -39,11 +40,21 @@ class SecurityConfiguration @Autowired constructor(
     }
 
     override fun configure(http: HttpSecurity?) {
-        http!!.csrf().disable().exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint) // form 전송시 403 뜨기떄문에 disable
-        http!!.cors()
-            .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            .and().authorizeRequests().anyRequest().permitAll()
-        http!!.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter::class.java)
+        http {
+            csrf {
+                disable()
+            }
+            exceptionHandling {
+                jwtAuthenticationEntryPoint
+            }
+            sessionManagement {
+                SessionCreationPolicy.STATELESS
+            }
+            authorizeRequests {
+                authorize(anyRequest, permitAll)
+            }
+            addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter::class.java)
+        }
     }
 
 }
