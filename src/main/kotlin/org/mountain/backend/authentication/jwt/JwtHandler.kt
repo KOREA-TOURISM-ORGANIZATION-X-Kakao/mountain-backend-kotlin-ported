@@ -1,7 +1,5 @@
 package org.mountain.backend.authentication.jwt
 
-import org.mountain.backend.authentication.service.UserService
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.access.AccessDeniedException
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.AuthenticationException
@@ -38,6 +36,7 @@ class JwtAccessDeniedHandler : AccessDeniedHandler {
     }
 }
 
+@Component
 class JwtAuthenticationFilter (
     private val jwtProvider: JwtProvider,
 ) : OncePerRequestFilter() {
@@ -57,11 +56,8 @@ class JwtAuthenticationFilter (
         filterChain.doFilter(request, response)
     }
 
-    private fun getToken(request: HttpServletRequest): String {
-        return request.getHeader(jwtProvider.headerTokenKey)
+    private fun getToken(request: HttpServletRequest): String? {
+        return request.getHeader(jwtProvider.headerTokenKey!!)
     }
 
 }
-
-
-
