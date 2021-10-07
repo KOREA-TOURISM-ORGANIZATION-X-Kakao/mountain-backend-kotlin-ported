@@ -24,6 +24,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("mysql:mysql-connector-java")
+
     compile("io.jsonwebtoken:jjwt:0.9.1")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
