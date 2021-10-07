@@ -8,7 +8,6 @@ import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.junit.jupiter.MockitoExtension
-import org.mountain.backend.authentication.domain.User
 import org.mountain.backend.authentication.dto.JwtResponseModel
 import org.mountain.backend.authentication.dto.SigninModel
 import org.mountain.backend.authentication.dto.SignupModel
@@ -52,10 +51,6 @@ class AuthenticationTest {
 
         Assertions.assertEquals(response != null, true)
         Assertions.assertEquals(response!!.accessToken, "test-token")
-    }
-
-    fun getResultUserMock(): User {
-        return User("남대영", "wsnam0507@gmail.com", "12345")
     }
 
 }
