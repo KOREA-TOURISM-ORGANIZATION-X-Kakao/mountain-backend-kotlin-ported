@@ -27,6 +27,7 @@ dependencies {
 
     compile("io.jsonwebtoken:jjwt:0.9.1")
 
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.security:spring-security-test")
 }

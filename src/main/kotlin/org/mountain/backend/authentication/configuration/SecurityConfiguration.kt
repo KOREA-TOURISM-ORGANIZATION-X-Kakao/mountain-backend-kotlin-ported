@@ -3,6 +3,9 @@ package org.mountain.backend.authentication.configuration;
 import org.mountain.backend.authentication.jwt.JwtAccessDeniedHandler
 import org.mountain.backend.authentication.jwt.JwtAuthenticationEntryPoint
 import org.mountain.backend.authentication.jwt.JwtAuthenticationFilter
+import org.mountain.backend.authentication.oauth2.CustomOAuth2UserService
+import org.mountain.backend.authentication.oauth2.OAuth2AuthenticationFailureHandler
+import org.mountain.backend.authentication.oauth2.OAuth2AuthenticationSuccessHandler
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,7 +26,10 @@ import org.springframework.security.config.web.servlet.invoke
 class SecurityConfiguration @Autowired constructor(
     val jwtAuthenticationEntryPoint: JwtAuthenticationEntryPoint,
     val jwtAccessDeniedHandler: JwtAccessDeniedHandler,
-    val jwtAuthenticationFilter: JwtAuthenticationFilter
+    val jwtAuthenticationFilter: JwtAuthenticationFilter,
+    val customOAuth2UserService: CustomOAuth2UserService,
+    val oAuth2SuccessfullyHandler: OAuth2AuthenticationSuccessHandler,
+    val oAuth2FailureHandler: OAuth2AuthenticationFailureHandler
 ) : WebSecurityConfigurerAdapter() {
 
     @Bean
@@ -52,6 +58,16 @@ class SecurityConfiguration @Autowired constructor(
             }
             authorizeRequests {
                 authorize(anyRequest, permitAll)
+            }
+            oauth2Login {
+                authorizationEndpoint {
+                    "/oauth2/authorization"
+                }
+                userInfoEndpoint {
+                    customOAuth2UserService
+                }
+                authenticationSuccessHandler = oAuth2SuccessfullyHandler
+                authenticationFailureHandler = oAuth2FailureHandler
             }
             addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter::class.java)
         }

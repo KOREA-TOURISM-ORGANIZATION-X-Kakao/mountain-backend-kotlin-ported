@@ -12,6 +12,7 @@ import org.mountain.backend.authentication.authority.Authority
 import org.mountain.backend.authentication.domain.User
 import org.mountain.backend.authentication.repository.UserRepository
 import org.mountain.backend.authentication.service.UserService
+import org.mountain.backend.authentication.type.RegistrationType
 
 @ExtendWith(MockitoExtension::class)
 class UserServiceTest {
@@ -53,7 +54,12 @@ class UserServiceTest {
     }
 
     fun getResultUserMock(): User {
-        return User("남대영", "wsnam0507@gmail.com", "12345", Authority.ROLE_USER)
+        return User(
+            "남대영",
+            "wsnam0507@gmail.com",
+            "12345", Authority.ROLE_USER,
+            RegistrationType.EMAIL
+        )
     }
 
 }

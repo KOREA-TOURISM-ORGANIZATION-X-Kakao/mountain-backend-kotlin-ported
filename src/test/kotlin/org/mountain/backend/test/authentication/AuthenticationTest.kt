@@ -8,11 +8,14 @@ import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.junit.jupiter.MockitoExtension
+import org.mountain.backend.authentication.authority.Authority
+import org.mountain.backend.authentication.domain.User
 import org.mountain.backend.authentication.dto.JwtResponseModel
 import org.mountain.backend.authentication.dto.SigninModel
 import org.mountain.backend.authentication.dto.SignupModel
 import org.mountain.backend.authentication.service.AuthenticationService
 import org.mountain.backend.authentication.service.UserService
+import org.mountain.backend.authentication.type.RegistrationType
 
 @ExtendWith(MockitoExtension::class)
 class AuthenticationTest {
@@ -43,14 +46,22 @@ class AuthenticationTest {
         val signinModel = SigninModel("wsnam0507@gmail.com", "12345")
 
         // when
-        Mockito.`when`(userService.validation(signinModel)).thenReturn(true)
-        Mockito.`when`(userService.generateJwt(signinModel)).thenReturn(JwtResponseModel("test-token", ""))
+        Mockito.`when`(userService.getUserByEmail(signinModel.email)).thenReturn(getResultUserMock())
 
         // then
         val response: JwtResponseModel? = authenticationService.signin(signinModel)
 
         Assertions.assertEquals(response != null, true)
         Assertions.assertEquals(response!!.accessToken, "test-token")
+    }
+
+    fun getResultUserMock(): User {
+        return User(
+            "남대영",
+            "wsnam0507@gmail.com",
+            "12345", Authority.ROLE_USER,
+            RegistrationType.EMAIL
+        )
     }
 
 }
