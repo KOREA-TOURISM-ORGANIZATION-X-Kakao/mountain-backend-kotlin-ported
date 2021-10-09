@@ -28,9 +28,9 @@ class AuthenticationService @Autowired constructor(
 
     fun signin(signinModel: SigninModel): JwtResponseModel? {
         val encoded = signinModel.copy(password = passwordEncoder.encode(signinModel.password))
-        val user: User = userService.getUserByEmail(signinModel.email) ?: return null
+        val user: User = userService.getUserByEmail(signinModel.email)
 
-        if(user.password == encoded.password) {
+        if(user != null && user.password == encoded.password) {
             return JwtResponseModel(
                 jwtProvider.generateToken(signinModel.email, Authority.ROLE_USER.name),
                 ""
