@@ -27,6 +27,10 @@ dependencies {
 
     compile("io.jsonwebtoken:jjwt:0.9.1")
 
+    compile("org.springframework.boot:spring-boot-starter-batch")
+// https://mvnrepository.com/artifact/com.github.kumarpankaj18/spring-batch-excel
+    implementation("com.github.kumarpankaj18:spring-batch-excel:1.0.6")
+
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.security:spring-security-test")
