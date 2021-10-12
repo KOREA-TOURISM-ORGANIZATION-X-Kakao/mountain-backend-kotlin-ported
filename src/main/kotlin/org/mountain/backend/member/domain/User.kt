@@ -15,9 +15,7 @@ class User (
     authority: Authority,
     registrationType: RegistrationType
 ) : BaseTimeEntity() {
-
-    constructor(email: String) : this("", email, "", "", Authority.ROLE_USER, RegistrationType.EMAIL)
-
+    
     @Id
     @Column(name = "id")
     var email: String = email
