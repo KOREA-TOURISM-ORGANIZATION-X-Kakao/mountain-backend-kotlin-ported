@@ -25,9 +25,4 @@ interface UserRepository : JpaRepository<User, String> {
             "WHERE u.id = :id AND u.username = :username")
     fun findByEmailAndUsername(id: String, username: String): User?
 
-    @Query("SELECT DISTINCT u FROM User u " +
-            "LEFT JOIN FETCH u.userSavedMountains " +
-            "WHERE u.id = :id")
-    fun findByEmails(id: String): User?
-
 }
