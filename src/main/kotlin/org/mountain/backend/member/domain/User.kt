@@ -15,7 +15,7 @@ class User (
     authority: Authority,
     registrationType: RegistrationType
 ) : BaseTimeEntity() {
-    
+
     @Id
     @Column(name = "id")
     var email: String = email
