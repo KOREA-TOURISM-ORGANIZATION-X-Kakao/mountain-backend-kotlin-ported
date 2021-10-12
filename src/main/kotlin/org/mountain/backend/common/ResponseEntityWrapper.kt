@@ -12,6 +12,11 @@ class ResponseEntityWrapper<T> {
         }
 
         @JvmStatic
+        fun <T> ok(): ResponseEntity<T> {
+            return ResponseEntity.ok().build()
+        }
+
+        @JvmStatic
         fun <T> badRequest(): ResponseEntity<T> {
             return ResponseEntity.badRequest().build();
         }

@@ -1,7 +1,7 @@
 package org.mountain.backend.authentication.dto
 
 import org.mountain.backend.authentication.authority.Authority
-import org.mountain.backend.authentication.domain.User
+import org.mountain.backend.member.domain.User
 import org.mountain.backend.authentication.type.RegistrationType
 
 fun SignupModel.toEntity(): User {
@@ -9,6 +9,7 @@ fun SignupModel.toEntity(): User {
         username,
         email,
         password,
+        "",
         Authority.ROLE_USER,
         RegistrationType.EMAIL
     )

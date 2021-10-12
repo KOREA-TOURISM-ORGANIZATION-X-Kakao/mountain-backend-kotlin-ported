@@ -1,6 +1,7 @@
 package org.mountain.backend.authentication.service;
 
-import org.mountain.backend.authentication.domain.User
+import org.mountain.backend.member.domain.User
+import org.mountain.backend.member.service.UserService
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails

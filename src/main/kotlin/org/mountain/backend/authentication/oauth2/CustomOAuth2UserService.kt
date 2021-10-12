@@ -34,9 +34,6 @@ class CustomOAuth2UserService : OAuth2UserService<OAuth2UserRequest, OAuth2User>
             .userNameAttributeName
         val attribute: OAuth2Attributes = OAuth2Attributes.of(registrationId, usernameAttributeName, user.attributes)
 
-        println(usernameAttributeName)
-        println(attribute.attributes)
-
         return CustomOAuth2User(
             listOf(SimpleGrantedAuthority(Authority.ROLE_USER.name)),
             attribute.attributes,

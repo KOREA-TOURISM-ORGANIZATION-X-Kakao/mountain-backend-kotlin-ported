@@ -9,9 +9,9 @@ import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.junit.jupiter.MockitoExtension
 import org.mountain.backend.authentication.authority.Authority
-import org.mountain.backend.authentication.domain.User
-import org.mountain.backend.authentication.repository.UserRepository
-import org.mountain.backend.authentication.service.UserService
+import org.mountain.backend.member.domain.User
+import org.mountain.backend.member.repository.UserRepository
+import org.mountain.backend.member.service.UserService
 import org.mountain.backend.authentication.type.RegistrationType
 
 @ExtendWith(MockitoExtension::class)

@@ -1,7 +1,7 @@
 package org.mountain.backend.authentication.dto
 
 import org.mountain.backend.authentication.authority.Authority
-import org.mountain.backend.authentication.domain.User
+import org.mountain.backend.member.domain.User
 import org.mountain.backend.authentication.type.RegistrationType
 import java.lang.RuntimeException
 
@@ -10,7 +10,7 @@ fun <K, V> Map<K, V>.toMutableMap(): MutableMap<K, V> {
 }
 
 fun OAuth2Attributes.toEntity(): User {
-    return User(name, email, "", Authority.ROLE_USER, RegistrationType.valueOf(registrationId.uppercase()))
+    return User(name, email, "", picture, Authority.ROLE_USER, RegistrationType.valueOf(registrationId.uppercase()))
 }
 
 data class OAuth2Attributes(

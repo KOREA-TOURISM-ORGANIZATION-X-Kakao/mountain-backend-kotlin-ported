@@ -1,10 +1,9 @@
 package org.mountain.backend.authentication.oauth2;
 
 import org.mountain.backend.authentication.authority.Authority
-import org.mountain.backend.authentication.domain.User
-import org.mountain.backend.authentication.dto.OAuth2Attributes
+import org.mountain.backend.member.domain.User
 import org.mountain.backend.authentication.jwt.JwtProvider
-import org.mountain.backend.authentication.service.UserService
+import org.mountain.backend.member.service.UserService
 import org.mountain.backend.authentication.type.RegistrationType
 import org.mountain.backend.common.Redirection
 import org.slf4j.Logger
@@ -48,6 +47,7 @@ class OAuth2AuthenticationSuccessHandler @Autowired constructor(
         val registrationId: String = user.registrationId
         val username: String? = user.attributes["nickname"] as String
         val email: String? = user.attributes["email"] as String
+        val profileImage: String? = user.attributes["profile_image"] as String ?: ""
 
         // registration Type이랑 다 비교해서 있으면 토큰 만들어서 보내줌.
         userService.getUserByEmailAndUsername(email!!, username!!)?.let {
@@ -58,6 +58,7 @@ class OAuth2AuthenticationSuccessHandler @Autowired constructor(
                 username,
                 email,
                 "",
+                profileImage!!,
                 Authority.ROLE_USER,
                 RegistrationType.valueOf(registrationId.uppercase())
             ))

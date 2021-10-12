@@ -1,5 +1,6 @@
 package org.mountain.backend.mountain.domain
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import javax.persistence.*
 
 @Entity
@@ -16,6 +17,7 @@ class Mountain(
     var mountainName: String = mountainName
     var location: String = location
 
+    @JsonIgnore
     @OneToMany(mappedBy = "mountain", cascade = [CascadeType.ALL], orphanRemoval = true)
     var mountainAttributes: MutableSet<MountainAttribute> = mutableSetOf()
         set(value) {

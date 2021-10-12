@@ -9,12 +9,12 @@ import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.junit.jupiter.MockitoExtension
 import org.mountain.backend.authentication.authority.Authority
-import org.mountain.backend.authentication.domain.User
+import org.mountain.backend.member.domain.User
 import org.mountain.backend.authentication.dto.JwtResponseModel
 import org.mountain.backend.authentication.dto.SigninModel
 import org.mountain.backend.authentication.dto.SignupModel
 import org.mountain.backend.authentication.service.AuthenticationService
-import org.mountain.backend.authentication.service.UserService
+import org.mountain.backend.member.service.UserService
 import org.mountain.backend.authentication.type.RegistrationType
 
 @ExtendWith(MockitoExtension::class)
