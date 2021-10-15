@@ -15,6 +15,7 @@ import org.mountain.backend.review.dto.UserReviewRequestModel
 import org.mountain.backend.review.service.UserReviewService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Pageable
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -62,10 +63,19 @@ class UserApiService @Autowired constructor(
     }
 
     @Transactional
-    fun getUserSavedMountain(email: String): UserMountainResponseModel {
-        val user: User = userService.getUserByEmail(email)
+    fun getUserSavedMountain(
+        userMountainPaginationRequestModel: UserMountainPaginationRequestModel
+    ): UserMountainResponseModel {
+        val user: User = userService.getUserByEmail(userMountainPaginationRequestModel.email)
+        val page = mountainRepository.findByUser(
+            PageRequest.of(userMountainPaginationRequestModel.currentPage, userMountainPaginationRequestModel.dataSize),
+            user
+        )
 
-        return UserMountainResponseModel(mountainRepository.findByUser(user))
+        return UserMountainResponseModel(
+            page.content,
+            page.totalPages
+        )
     }
 
     @Transactional
@@ -94,12 +104,12 @@ class UserApiService @Autowired constructor(
 
     fun getAllUserInfo(email: String): UserInfoResponseModel {
         val user: User = userService.getUserByEmail(email)
-        val mountains = mountainRepository.findByUser(user)
+        val mountains = mountainRepository.findByUser(Pageable.ofSize(5), user)
 
         return UserInfoResponseModel(
             user.email,
             user.username,
-            MountainResponseModel.of(mountains),
+            MountainResponseModel.of(mountains.content),
             ReviewResponseModel.of(user.reviews)
         )
     }
