@@ -1,4 +1,4 @@
-package org.mountain.backend.review
+package org.mountain.backend.review.domain
 
 import org.mountain.backend.member.domain.User
 import org.mountain.backend.mountain.domain.Mountain
