@@ -24,7 +24,7 @@ class Review(
     @get:JoinColumn(name = "mountain_id")
     val mountain = mountain
 
-    val grade = grade
-    val comment = comment
+    var grade = grade
+    var comment = comment
 
 }

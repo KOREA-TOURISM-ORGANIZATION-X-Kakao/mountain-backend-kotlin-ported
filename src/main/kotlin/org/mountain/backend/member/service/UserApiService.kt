@@ -9,6 +9,7 @@ import org.mountain.backend.member.dto.*
 import org.mountain.backend.mountain.dto.MountainResponseModel
 import org.mountain.backend.mountain.repository.MountainRepository
 import org.mountain.backend.review.dto.ReviewResponseModel
+import org.mountain.backend.review.dto.ReviewUpdateByUserModel
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
@@ -96,6 +97,30 @@ class UserApiService @Autowired constructor(
             MountainResponseModel.of(mountains),
             ReviewResponseModel.of(user.reviews)
         )
+    }
+
+    @Transactional
+    private fun updateReview(reviewUpdateByUserModel: ReviewUpdateByUserModel) {
+        val user = userService.getUserByEmail(reviewUpdateByUserModel.email)
+        val review = user.reviews.find { it.id == reviewUpdateByUserModel.reviewId }
+            ?: throw ApiException(ErrorType.RUNTIME_EXCEPTION, "리뷰가 없습니다.")
+        user.reviews.removeIf { it.id == reviewUpdateByUserModel.reviewId }
+
+        review.comment = reviewUpdateByUserModel.comment
+        review.grade = reviewUpdateByUserModel.grade
+
+        user.reviews.add(review)
+
+        userService.saveUser(user)
+    }
+
+    fun updateReview(reviewUpdateByUserModel: ReviewUpdateByUserModel, user: org.springframework.security.core.userdetails.User) {
+        if(isProperUserRequest(reviewUpdateByUserModel.email, user)) {
+            updateReview(reviewUpdateByUserModel)
+        }
+        else {
+            throw ApiException(ErrorType.ACCESS_DENIED, "잘못된 접근입니다.")
+        }
     }
 
 }

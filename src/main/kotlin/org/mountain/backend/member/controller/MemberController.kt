@@ -1,7 +1,6 @@
 package org.mountain.backend.member.controller
 
 import org.mountain.backend.common.ResponseEntityWrapper
-import org.mountain.backend.member.dto.UserInfoResponse
 import org.mountain.backend.member.dto.UserInfoResponseModel
 import org.mountain.backend.member.dto.UserInfoUpdateModel
 import org.mountain.backend.member.service.UserApiService
