@@ -1,6 +1,7 @@
 package org.mountain.backend.mountain.domain
 
 import com.fasterxml.jackson.annotation.JsonIgnore
+import org.mountain.backend.review.domain.Review
 import javax.persistence.*
 
 @Entity
@@ -20,6 +21,19 @@ class Mountain(
     @JsonIgnore
     @OneToMany(mappedBy = "mountain", cascade = [CascadeType.ALL], orphanRemoval = true)
     var mountainAttributes: MutableSet<MountainAttribute> = mutableSetOf()
+        set(value) {
+            if(field == null) {
+                field = value
+            }
+            else {
+                field.clear()
+                field.addAll(value)
+            }
+        }
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "mountain", cascade = [CascadeType.ALL], orphanRemoval = true)
+    var reviews: MutableSet<Review> = mutableSetOf()
         set(value) {
             if(field == null) {
                 field = value

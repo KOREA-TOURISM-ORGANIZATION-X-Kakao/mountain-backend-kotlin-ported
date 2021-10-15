@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 
+fun MountainRepository.findByMountainCode(id: String): Mountain? = findById(id).orElse(null)
+
 @Repository
 interface MountainRepository : JpaRepository<Mountain, String> {
 
