@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository
 
 @Query("SELECT DISTINCT u FROM User u " +
         "LEFT JOIN FETCH u.userSavedMountains " +
+        "LEFT JOIN FETCH u.reviews " +
         "WHERE u.id = :id")
 fun UserRepository.findByEmail(id: String): User? = findById(id).orElse(null)
 
@@ -15,6 +16,7 @@ interface UserRepository : JpaRepository<User, String> {
 
     @Query("SELECT DISTINCT u FROM User u " +
             "LEFT JOIN FETCH u.userSavedMountains " +
+            "LEFT JOIN FETCH u.reviews " +
             "WHERE u.username = :username")
     fun findByUsername(username: String): User?
 
@@ -22,6 +24,7 @@ interface UserRepository : JpaRepository<User, String> {
 
     @Query("SELECT DISTINCT u FROM User u " +
             "LEFT JOIN FETCH u.userSavedMountains " +
+            "LEFT JOIN FETCH u.reviews " +
             "WHERE u.id = :id AND u.username = :username")
     fun findByEmailAndUsername(id: String, username: String): User?
 

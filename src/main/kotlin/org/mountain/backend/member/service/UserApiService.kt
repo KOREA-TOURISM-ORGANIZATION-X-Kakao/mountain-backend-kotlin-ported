@@ -5,11 +5,10 @@ import org.mountain.backend.exception.ApiException
 import org.mountain.backend.exception.ErrorType
 import org.mountain.backend.member.domain.User
 import org.mountain.backend.member.domain.UserMountain
-import org.mountain.backend.member.dto.UserInfoResponse
-import org.mountain.backend.member.dto.UserInfoUpdateModel
-import org.mountain.backend.member.dto.UserMountainResponseModel
-import org.mountain.backend.member.dto.UserMountainUpdateModel
+import org.mountain.backend.member.dto.*
+import org.mountain.backend.mountain.dto.MountainResponseModel
 import org.mountain.backend.mountain.repository.MountainRepository
+import org.mountain.backend.review.dto.ReviewResponseModel
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
@@ -84,6 +83,18 @@ class UserApiService @Autowired constructor(
             user.email,
             user.username,
             user.modifiedDate.format(simpleDateFormat)
+        )
+    }
+
+    fun getAllUserInfo(email: String): UserInfoResponseModel {
+        val user: User = userService.getUserByEmail(email)
+        val mountains = mountainRepository.findByUser(user)
+
+        return UserInfoResponseModel(
+            user.email,
+            user.username,
+            MountainResponseModel.of(mountains),
+            ReviewResponseModel.of(user.reviews)
         )
     }
 

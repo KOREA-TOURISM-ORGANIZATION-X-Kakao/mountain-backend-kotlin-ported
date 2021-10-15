@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore
 import org.mountain.backend.authentication.authority.Authority
 import org.mountain.backend.authentication.type.RegistrationType
 import org.mountain.backend.common.BaseTimeEntity
+import org.mountain.backend.review.domain.Review
 import javax.persistence.*
 
 @Entity
@@ -37,6 +38,19 @@ class User (
                 field.addAll(value)
             }
         }
+
+    @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL], orphanRemoval = true)
+    var reviews: MutableSet<Review> = mutableSetOf()
+        set(value) {
+            if(field == null) {
+                field = value
+            }
+            else {
+                field.clear()
+                field.addAll(value)
+            }
+        }
+
 }
 
 @Entity
