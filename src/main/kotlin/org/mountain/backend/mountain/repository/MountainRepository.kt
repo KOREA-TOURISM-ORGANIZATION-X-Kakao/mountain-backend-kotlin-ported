@@ -18,3 +18,39 @@ interface MountainRepository : JpaRepository<Mountain, String> {
     fun findByUser(pageable: Pageable, user: User): Page<Mountain>
 
 }
+
+@Repository
+interface MountainSearchRepository : JpaRepository<Mountain, String> {
+
+    @Query("SELECT m FROM Mountain m " +
+            "WHERE m.mountainName LIKE %:nameFilter% AND m.location LIKE %:locationFilter%")
+    fun searchByMountainNameAndLocation(pageable: Pageable, nameFilter: String, locationFilter: String): Page<Mountain>
+
+    @Query("SELECT DISTINCT m FROM Mountain m " +
+            "LEFT JOIN MountainAttribute a ON a.mountain = m AND difficulty = :difficultyFilter " +
+            "WHERE m.location LIKE %:locationFilter%")
+    fun searchByLocationAndDifficulty(pageable: Pageable, locationFilter: String, difficultyFilter: String): Page<Mountain>
+
+    @Query("SELECT DISTINCT m FROM Mountain m " +
+            "LEFT JOIN MountainAttribute a ON a.mountain = m AND difficulty = :difficultyFilter " +
+            "WHERE m.mountainName LIKE %:nameFilter%")
+    fun searchByMountainNameAndDifficulty(pageable: Pageable, nameFilter: String, difficultyFilter: String): Page<Mountain>
+
+    @Query("SELECT m FROM Mountain m " +
+            "WHERE m.location LIKE %:locationFilter%")
+    fun searchByLocation(pageable: Pageable, locationFilter: String): Page<Mountain>
+
+    @Query("SELECT m FROM Mountain m " +
+            "LEFT JOIN MountainAttribute a ON a.mountain = m AND a.difficulty = :difficultyFilter")
+    fun searchByDifficulty(pageable: Pageable, difficultyFilter: String): Page<Mountain>
+
+    @Query("SELECT m FROM Mountain m" +
+            " WHERE m.mountainName LIKE %:nameFilter%")
+    fun searchByMountainName(pageable: Pageable, nameFilter: String): Page<Mountain>
+
+    @Query("SELECT DISTINCT m FROM Mountain m " +
+            "LEFT JOIN MountainAttribute a ON a.mountain = m AND a.difficulty = :difficultyFilter " +
+            "WHERE m.mountainName LIKE %:nameFilter% AND m.location LIKE %:locationFilter%")
+    fun searchAllFilter(pageable: Pageable, nameFilter: String, locationFilter: String, difficultyFilter: String): Page<Mountain>
+
+}
