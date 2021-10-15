@@ -10,7 +10,11 @@ import org.mountain.backend.mountain.dto.MountainResponseModel
 import org.mountain.backend.mountain.repository.MountainRepository
 import org.mountain.backend.review.dto.ReviewResponseModel
 import org.mountain.backend.review.dto.ReviewUpdateByUserModel
+import org.mountain.backend.review.dto.UserReviewPaginationResponseModel
+import org.mountain.backend.review.dto.UserReviewRequestModel
+import org.mountain.backend.review.service.UserReviewService
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.PageRequest
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -19,7 +23,8 @@ import org.springframework.transaction.annotation.Transactional
 class UserApiService @Autowired constructor(
     private val userService: UserService,
     private val mountainRepository: MountainRepository,
-    private val passwordEncoder: PasswordEncoder
+    private val passwordEncoder: PasswordEncoder,
+    private val userReviewService: UserReviewService
 ) {
 
     fun isProperUserRequest(
@@ -121,6 +126,13 @@ class UserApiService @Autowired constructor(
         else {
             throw ApiException(ErrorType.ACCESS_DENIED, "잘못된 접근입니다.")
         }
+    }
+
+    fun getUserReview(userReviewRequestModel: UserReviewRequestModel): UserReviewPaginationResponseModel {
+        return userReviewService.getUserReviewList(
+            userReviewRequestModel.email,
+            PageRequest.of(userReviewRequestModel.currentPage, userReviewRequestModel.dataSize)
+        )
     }
 
 }

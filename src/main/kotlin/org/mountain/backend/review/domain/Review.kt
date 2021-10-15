@@ -18,11 +18,11 @@ class Review(
 
     @ManyToOne(fetch = FetchType.EAGER)
     @get:JoinColumn(name = "user_id")
-    val user = user
+    var user = user
 
     @ManyToOne(fetch = FetchType.EAGER)
     @get:JoinColumn(name = "mountain_id")
-    val mountain = mountain
+    var mountain = mountain
 
     var grade = grade
     var comment = comment

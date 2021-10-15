@@ -9,11 +9,22 @@ data class ReviewResponseModel(
     val comment: String
 ) {
     companion object {
-        fun of(reviews: Set<Review>): List<ReviewResponseModel> {
+        fun of(reviews: Collection<Review>): List<ReviewResponseModel> {
             return reviews.map { ReviewResponseModel(it.id, it.user.username, it.grade, it.comment) }.toList()
         }
     }
 }
+
+data class UserReviewPaginationResponseModel(
+    val reviews: List<ReviewResponseModel>,
+    val totalPage: Int
+)
+
+data class UserReviewRequestModel(
+    val email: String,
+    val currentPage: Int,
+    val dataSize: Int
+)
 
 // 리뷰 저장/수정 모델
 data class ReviewPostModel(
