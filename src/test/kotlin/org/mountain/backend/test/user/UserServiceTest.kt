@@ -57,7 +57,9 @@ class UserServiceTest {
         return User(
             "남대영",
             "wsnam0507@gmail.com",
-            "12345", Authority.ROLE_USER,
+            "12345",
+            "IMAGE",
+            Authority.ROLE_USER,
             RegistrationType.EMAIL
         )
     }

@@ -59,7 +59,9 @@ class AuthenticationTest {
         return User(
             "남대영",
             "wsnam0507@gmail.com",
-            "12345", Authority.ROLE_USER,
+            "12345",
+            "PROFILE",
+            Authority.ROLE_USER,
             RegistrationType.EMAIL
         )
     }

@@ -4,9 +4,8 @@ import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.mountain.backend.common.ResourceNameFilter
 import org.mountain.backend.common.ResourcesLoader
-import org.mountain.backend.common.UnzipContent
 import org.mountain.backend.common.ZipInputStreamReader
-import org.mountain.backend.mountain.dto.MountainAttribute
+import org.mountain.backend.mountain.dto.MountainAttributeModel
 import org.mountain.backend.mountain.dto.MountainExcelFileModel
 import org.mountain.backend.mountain.dto.MountainGeometry
 import org.mountain.backend.mountain.dto.MountainInformationModel
@@ -71,7 +70,7 @@ class MountainAttributeReader(
 
     private fun makeMountainAttribute(jsonNode: JsonNode): MountainInformationModel {
         val featureFieldNode = jsonNode["features"]
-        val mountainAttributes = mutableListOf<MountainAttribute>()
+        val mountainAttributes = mutableListOf<MountainAttributeModel>()
 
         featureFieldNode.forEach { feature ->
             val attribute = feature["attributes"]
@@ -82,7 +81,7 @@ class MountainAttributeReader(
                 paths.add(MountainGeometry(it[0].asDouble(), it[1].asDouble()))
             }
 
-            val mountainAttribute = MountainAttribute(
+            val mountainAttribute = MountainAttributeModel(
                 no = attribute["MNTN_CODE"].asText(),
                 loadLength = attribute["PMNTN_LT"].asDouble(),
                 difficulty = attribute["PMNTN_DFFL"].asText(),
